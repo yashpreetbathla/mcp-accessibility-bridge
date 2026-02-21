@@ -10,6 +10,10 @@
 [![MCP SDK](https://img.shields.io/badge/MCP%20SDK-1.10-purple.svg)](https://github.com/modelcontextprotocol/sdk)
 [![Puppeteer Core](https://img.shields.io/badge/puppeteer--core-22-orange.svg)](https://pptr.dev)
 
+<br/>
+
+![Architecture](screenshots/01-architecture.svg)
+
 </div>
 
 ---
@@ -280,6 +284,8 @@ Uses `document.activeElement` + `Accessibility.getPartialAXTree` to report what 
 
 ## Selector Priority Engine
 
+![Selector Priority Engine](screenshots/02-selector-priority.svg)
+
 `src/utils/selectorGenerator.ts` implements a 4-tier priority system:
 
 ```
@@ -331,6 +337,8 @@ Every element returns all four frameworks:
 ---
 
 ## Real-World Use Cases
+
+![Workflow](screenshots/04-workflow.svg)
 
 ### 1. Instant Test Suite from Zero
 
@@ -492,6 +500,8 @@ Replace `/absolute/path/to/` with your actual clone path.
 Claude will call `browser_connect` then `browser_navigate` and confirm the page title.
 
 ### Get the Accessibility Tree
+
+![Tool Output Example](screenshots/03-tool-output.svg)
 
 > *"Show me the accessibility tree for this page, 5 levels deep"*
 
