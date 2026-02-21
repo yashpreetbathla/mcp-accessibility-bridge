@@ -34,12 +34,6 @@ No cloning. No building. Paste this into your Claude Desktop config and you're d
 }
 ```
 
-Config file location:
-- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
-
-Then fully quit and relaunch Claude Desktop. That's it.
-
 ---
 
 ## What Is This?
