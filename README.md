@@ -472,20 +472,61 @@ Expected response:
 
 ## Claude Desktop Configuration
 
-Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows).
+
+### Option 1 — npx (recommended, no install needed)
+
+Works immediately. No path to configure, works on any machine.
 
 ```json
 {
   "mcpServers": {
     "accessibility-bridge": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-accessibility-bridge/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "mcp-accessibility-bridge"]
     }
   }
 }
 ```
 
-Replace `/absolute/path/to/` with your actual clone path.
+### Option 2 — Global install
+
+```bash
+npm install -g mcp-accessibility-bridge
+```
+
+Then use just the command name — no path, no args:
+
+```json
+{
+  "mcpServers": {
+    "accessibility-bridge": {
+      "command": "mcp-accessibility-bridge"
+    }
+  }
+}
+```
+
+### Option 3 — Local dev (cloned repo)
+
+```bash
+git clone https://github.com/yashpreetbathla/mcp-accessibility-bridge.git
+cd mcp-accessibility-bridge
+npm install && npm run build
+npm link          # registers the binary globally
+```
+
+Config becomes identical to Option 2:
+
+```json
+{
+  "mcpServers": {
+    "accessibility-bridge": {
+      "command": "mcp-accessibility-bridge"
+    }
+  }
+}
+```
 
 **After saving:** fully quit Claude Desktop (`Cmd+Q` on macOS), then relaunch. The `accessibility-bridge` tools will appear in Claude's tool list.
 

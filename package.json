@@ -4,10 +4,48 @@
   "description": "MCP server that exposes browser accessibility tree via Chrome CDP",
   "type": "module",
   "main": "dist/index.js",
+  "bin": {
+    "mcp-accessibility-bridge": "bin/mcp-accessibility-bridge.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "POLICY.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "accessibility",
+    "aria",
+    "chrome-devtools-protocol",
+    "cdp",
+    "playwright",
+    "selenium",
+    "cypress",
+    "webdriverio",
+    "test-automation",
+    "claude",
+    "typescript"
+  ],
+  "author": "Yashpreet Bathla",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yashpreetbathla/mcp-accessibility-bridge.git"
+  },
+  "homepage": "https://github.com/yashpreetbathla/mcp-accessibility-bridge#readme",
+  "bugs": {
+    "url": "https://github.com/yashpreetbathla/mcp-accessibility-bridge/issues"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.10.0",
