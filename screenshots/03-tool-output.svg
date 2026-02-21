@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" font-family="monospace,sans-serif">
+  <rect width="900" height="560" fill="#0d1117"/>
+  <text x="450" y="38" text-anchor="middle" fill="#58a6ff" font-size="20" font-weight="bold">get_interactive_elements — Example Output</text>
+  <text x="450" y="62" text-anchor="middle" fill="#8b949e" font-size="12">Claude calls this tool → receives every interactive element with all 4 framework selectors</text>
+
+  <!-- JSON block -->
+  <rect x="40" y="80" width="820" height="450" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="60" y="110" fill="#8b949e" font-size="11">// Tool response from: get_interactive_elements &#123; roles: ["button","textbox","link"] &#125;</text>
+  <text x="60" y="132" fill="#e6edf3" font-size="11">&#123;</text>
+  <text x="80" y="152" fill="#e6edf3" font-size="11">  <tspan fill="#79c0ff">"totalFound"</tspan>: <tspan fill="#a5d6ff">23</tspan>,</text>
+  <text x="80" y="172" fill="#e6edf3" font-size="11">  <tspan fill="#79c0ff">"elements"</tspan>: [</text>
+  <text x="100" y="192" fill="#e6edf3" font-size="11">    &#123;</text>
+  <text x="120" y="212" fill="#e6edf3" font-size="11">      <tspan fill="#79c0ff">"role"</tspan>:    <tspan fill="#a5d6ff">"button"</tspan>,</text>
+  <text x="120" y="232" fill="#e6edf3" font-size="11">      <tspan fill="#79c0ff">"name"</tspan>:    <tspan fill="#a5d6ff">"Sign in"</tspan>,</text>
+  <text x="120" y="252" fill="#e6edf3" font-size="11">      <tspan fill="#79c0ff">"tagName"</tspan>: <tspan fill="#a5d6ff">"button"</tspan>,</text>
+  <text x="120" y="272" fill="#e6edf3" font-size="11">      <tspan fill="#79c0ff">"suggestedSelectors"</tspan>: &#123;</text>
+  <text x="140" y="292" fill="#e6edf3" font-size="11">        <tspan fill="#79c0ff">"testId"</tspan>:      <tspan fill="#7ee787">"[data-testid='sign-in-btn']"</tspan>,</text>
+  <text x="140" y="312" fill="#e6edf3" font-size="11">        <tspan fill="#79c0ff">"aria"</tspan>:        <tspan fill="#7ee787">"role=button[name='Sign in']"</tspan>,</text>
+  <text x="140" y="332" fill="#e6edf3" font-size="11">        <tspan fill="#79c0ff">"playwright"</tspan>:  <tspan fill="#7ee787">"page.getByTestId('sign-in-btn')"</tspan>,</text>
+  <text x="140" y="352" fill="#e6edf3" font-size="11">        <tspan fill="#79c0ff">"selenium"</tspan>:    <tspan fill="#7ee787">"driver.find_element(By.CSS_SELECTOR, '[data-testid=\"sign-in-btn\"]')"</tspan>,</text>
+  <text x="140" y="372" fill="#e6edf3" font-size="11">        <tspan fill="#79c0ff">"cypress"</tspan>:     <tspan fill="#7ee787">"cy.get('[data-testid=\"sign-in-btn\"]')"</tspan>,</text>
+  <text x="140" y="392" fill="#e6edf3" font-size="11">        <tspan fill="#79c0ff">"webdriverio"</tspan>: <tspan fill="#7ee787">"$('[data-testid=\"sign-in-btn\"]')"</tspan>,</text>
+  <text x="140" y="412" fill="#e6edf3" font-size="11">        <tspan fill="#79c0ff">"stability"</tspan>:   <tspan fill="#d2a8ff">"high"</tspan>,</text>
+  <text x="140" y="432" fill="#e6edf3" font-size="11">        <tspan fill="#79c0ff">"recommended"</tspan>: <tspan fill="#ffa657">"page.getByTestId('sign-in-btn')"</tspan></text>
+  <text x="120" y="452" fill="#e6edf3" font-size="11">      &#125;</text>
+  <text x="100" y="472" fill="#e6edf3" font-size="11">    &#125;</text>
+  <text x="80" y="492" fill="#e6edf3" font-size="11">  ]</text>
+  <text x="60" y="512" fill="#e6edf3" font-size="11">&#125;</text>
+</svg>

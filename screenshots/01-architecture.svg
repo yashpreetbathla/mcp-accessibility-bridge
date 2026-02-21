@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" font-family="monospace,sans-serif">
+  <rect width="900" height="620" fill="#0d1117"/>
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="#58a6ff" font-size="22" font-weight="bold">MCP Accessibility Bridge — Architecture</text>
+
+  <!-- Claude Desktop Box -->
+  <rect x="30" y="70" width="200" height="80" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+  <text x="130" y="100" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="bold">Claude Desktop</text>
+  <text x="130" y="120" text-anchor="middle" fill="#8b949e" font-size="11">Claude LLM</text>
+  <text x="130" y="138" text-anchor="middle" fill="#8b949e" font-size="11">+ MCP Client</text>
+
+  <!-- Arrow: Claude → MCP Server -->
+  <line x1="230" y1="110" x2="320" y2="110" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="275" y="100" text-anchor="middle" fill="#58a6ff" font-size="10">stdio</text>
+  <text x="275" y="124" text-anchor="middle" fill="#58a6ff" font-size="10">JSON-RPC</text>
+
+  <!-- MCP Server Box -->
+  <rect x="320" y="60" width="260" height="440" rx="8" fill="#161b22" stroke="#388bfd" stroke-width="2"/>
+  <text x="450" y="85" text-anchor="middle" fill="#58a6ff" font-size="14" font-weight="bold">MCP Server (Node.js)</text>
+
+  <!-- Tools list -->
+  <rect x="335" y="100" width="230" height="220" rx="6" fill="#0d1117" stroke="#30363d"/>
+  <text x="450" y="120" text-anchor="middle" fill="#d2a8ff" font-size="12" font-weight="bold">8 MCP Tools</text>
+  <text x="345" y="140" fill="#7ee787" font-size="11">→ browser_connect</text>
+  <text x="345" y="158" fill="#7ee787" font-size="11">→ browser_navigate</text>
+  <text x="345" y="176" fill="#7ee787" font-size="11">→ browser_disconnect</text>
+  <text x="345" y="194" fill="#7ee787" font-size="11">→ get_accessibility_tree</text>
+  <text x="345" y="212" fill="#7ee787" font-size="11">→ query_accessibility_tree</text>
+  <text x="345" y="230" fill="#7ee787" font-size="11">→ get_element_properties</text>
+  <text x="345" y="248" fill="#7ee787" font-size="11">→ get_interactive_elements</text>
+  <text x="345" y="266" fill="#7ee787" font-size="11">→ get_focused_element</text>
+
+  <!-- BrowserManager -->
+  <rect x="335" y="335" width="230" height="60" rx="6" fill="#0d1117" stroke="#30363d"/>
+  <text x="450" y="358" text-anchor="middle" fill="#ffa657" font-size="12" font-weight="bold">BrowserManager</text>
+  <text x="450" y="378" text-anchor="middle" fill="#8b949e" font-size="10">Browser + Page + CDPSession</text>
+
+  <!-- Utils -->
+  <rect x="335" y="410" width="230" height="75" rx="6" fill="#0d1117" stroke="#30363d"/>
+  <text x="450" y="430" text-anchor="middle" fill="#ffa657" font-size="12" font-weight="bold">Utilities</text>
+  <text x="345" y="450" fill="#8b949e" font-size="10">axTree.ts — tree assembly</text>
+  <text x="345" y="466" fill="#8b949e" font-size="10">selectorGen.ts — 4-priority engine</text>
+  <text x="345" y="482" fill="#8b949e" font-size="10">errors.ts — toolSuccess/toolError</text>
+
+  <!-- Arrow: MCP Server → Chrome -->
+  <line x1="580" y1="280" x2="660" y2="280" stroke="#f78166" stroke-width="2" marker-end="url(#arrow2)"/>
+  <text x="620" y="268" text-anchor="middle" fill="#f78166" font-size="10">CDP</text>
+  <text x="620" y="296" text-anchor="middle" fill="#f78166" font-size="10">WebSocket</text>
+  <text x="620" y="308" text-anchor="middle" fill="#f78166" font-size="10">:9222</text>
+
+  <!-- Chrome Box -->
+  <rect x="660" y="80" width="210" height="400" rx="8" fill="#161b22" stroke="#f78166" stroke-width="2"/>
+  <text x="765" y="108" text-anchor="middle" fill="#f78166" font-size="14" font-weight="bold">Google Chrome</text>
+
+  <!-- Active tab -->
+  <rect x="675" y="120" width="180" height="160" rx="6" fill="#0d1117" stroke="#30363d"/>
+  <text x="765" y="145" text-anchor="middle" fill="#e6edf3" font-size="11" font-weight="bold">Active Tab</text>
+  <text x="765" y="168" text-anchor="middle" fill="#8b949e" font-size="10">DOM Tree</text>
+  <text x="765" y="185" text-anchor="middle" fill="#8b949e" font-size="10">↓</text>
+  <text x="765" y="202" text-anchor="middle" fill="#58a6ff" font-size="10">AX Object Model</text>
+  <text x="765" y="220" text-anchor="middle" fill="#58a6ff" font-size="10">(computed by Chrome)</text>
+  <text x="765" y="240" text-anchor="middle" fill="#8b949e" font-size="10">↓</text>
+  <text x="765" y="257" text-anchor="middle" fill="#7ee787" font-size="10">AX Tree exposed</text>
+  <text x="765" y="272" text-anchor="middle" fill="#7ee787" font-size="10">via CDP</text>
+
+  <!-- CDP domains -->
+  <rect x="675" y="295" width="180" height="170" rx="6" fill="#0d1117" stroke="#30363d"/>
+  <text x="765" y="315" text-anchor="middle" fill="#d2a8ff" font-size="11" font-weight="bold">CDP Domains</text>
+  <text x="685" y="335" fill="#8b949e" font-size="10">Accessibility.enable</text>
+  <text x="685" y="352" fill="#8b949e" font-size="10">Accessibility.getFullAXTree</text>
+  <text x="685" y="369" fill="#8b949e" font-size="10">Accessibility.queryAXTree</text>
+  <text x="685" y="386" fill="#8b949e" font-size="10">Accessibility.getPartialAXTree</text>
+  <text x="685" y="403" fill="#8b949e" font-size="10">DOM.describeNode</text>
+  <text x="685" y="420" fill="#8b949e" font-size="10">DOM.getOuterHTML</text>
+  <text x="685" y="437" fill="#8b949e" font-size="10">Page.goto</text>
+  <text x="685" y="454" fill="#8b949e" font-size="10">Runtime.evaluate</text>
+
+  <!-- Selectors output box -->
+  <rect x="30" y="520" width="840" height="80" rx="8" fill="#161b22" stroke="#7ee787" stroke-width="1.5"/>
+  <text x="450" y="545" text-anchor="middle" fill="#7ee787" font-size="13" font-weight="bold">Generated Selectors (all 4 frameworks)</text>
+  <text x="80" y="568" fill="#e6edf3" font-size="10">Playwright:   page.getByRole('button', &#123; name: 'Submit' &#125;)</text>
+  <text x="80" y="584" fill="#e6edf3" font-size="10">Selenium:     driver.find_element(By.XPATH, "//button[@aria-label='Submit']")</text>
+  <text x="500" y="568" fill="#e6edf3" font-size="10">Cypress:      cy.get('[data-testid="submit-btn"]')</text>
+  <text x="500" y="584" fill="#e6edf3" font-size="10">WebdriverIO:  $('[data-testid="submit-btn"]')</text>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f78166"/>
+    </marker>
+  </defs>
+</svg>

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.js.map
+.DS_Store
+*.env
+examples/playwright-github-tests/node_modules/
+examples/playwright-github-tests/test-results/
+examples/playwright-github-tests/playwright-report/
+examples/playwright-github-tests/.playwright/

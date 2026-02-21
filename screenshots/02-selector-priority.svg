@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" font-family="monospace,sans-serif">
+  <rect width="900" height="500" fill="#0d1117"/>
+  <text x="450" y="40" text-anchor="middle" fill="#58a6ff" font-size="22" font-weight="bold">Selector Priority Engine</text>
+  <text x="450" y="65" text-anchor="middle" fill="#8b949e" font-size="13">src/utils/selectorGenerator.ts — 4-tier priority system</text>
+
+  <!-- Priority 1 -->
+  <rect x="40" y="90" width="820" height="80" rx="8" fill="#161b22" stroke="#7ee787" stroke-width="2"/>
+  <rect x="40" y="90" width="8" height="80" rx="4" fill="#7ee787"/>
+  <text x="70" y="115" fill="#7ee787" font-size="13" font-weight="bold">Priority 1 — Test ID Attributes  (HIGHEST STABILITY)</text>
+  <text x="70" y="137" fill="#8b949e" font-size="11">Checks: data-testid · data-cy · data-test · data-qa</text>
+  <text x="70" y="157" fill="#e6edf3" font-size="11">Playwright: page.getByTestId('submit-btn')    CSS: [data-testid="submit-btn"]</text>
+
+  <!-- Priority 2 -->
+  <rect x="40" y="185" width="820" height="80" rx="8" fill="#161b22" stroke="#ffa657" stroke-width="2"/>
+  <rect x="40" y="185" width="8" height="80" rx="4" fill="#ffa657"/>
+  <text x="70" y="210" fill="#ffa657" font-size="13" font-weight="bold">Priority 2 — Stable Element ID  (HIGH STABILITY)</text>
+  <text x="70" y="230" fill="#8b949e" font-size="11">Skips: UUIDs · numeric IDs · mat-* · ng-* prefixes</text>
+  <text x="70" y="250" fill="#e6edf3" font-size="11">Playwright: page.locator('#email-input')       CSS: #email-input</text>
+
+  <!-- Priority 3 -->
+  <rect x="40" y="280" width="820" height="80" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <rect x="40" y="280" width="8" height="80" rx="4" fill="#58a6ff"/>
+  <text x="70" y="305" fill="#58a6ff" font-size="13" font-weight="bold">Priority 3 — ARIA Role + Accessible Name  (MEDIUM STABILITY)</text>
+  <text x="70" y="325" fill="#8b949e" font-size="11">Uses: CDP AX node role + name — immune to CSS class changes</text>
+  <text x="70" y="345" fill="#e6edf3" font-size="11">Playwright: page.getByRole('button', &#123; name: 'Submit' &#125;)   ARIA: role=button[name='Submit']</text>
+
+  <!-- Priority 4 -->
+  <rect x="40" y="375" width="820" height="80" rx="8" fill="#161b22" stroke="#f78166" stroke-width="2"/>
+  <rect x="40" y="375" width="8" height="80" rx="4" fill="#f78166"/>
+  <text x="70" y="400" fill="#f78166" font-size="13" font-weight="bold">Priority 4 — Semantic CSS  (FALLBACK)</text>
+  <text x="70" y="420" fill="#8b949e" font-size="11">Uses: tagName + type/name/role/placeholder attributes</text>
+  <text x="70" y="440" fill="#e6edf3" font-size="11">Playwright: page.locator('input[type="email"][name="email"]')</text>
+</svg>
