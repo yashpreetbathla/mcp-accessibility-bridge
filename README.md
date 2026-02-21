@@ -4,17 +4,41 @@
 
 **Expose any live webpage's accessibility tree to Claude — generate rock-solid, framework-agnostic test selectors in seconds.**
 
+[![npm version](https://img.shields.io/npm/v/mcp-accessibility-bridge.svg?color=red)](https://www.npmjs.com/package/mcp-accessibility-bridge)
+[![npm downloads](https://img.shields.io/npm/dm/mcp-accessibility-bridge.svg?color=blue)](https://www.npmjs.com/package/mcp-accessibility-bridge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-blue.svg)](https://www.typescriptlang.org)
 [![MCP SDK](https://img.shields.io/badge/MCP%20SDK-1.10-purple.svg)](https://github.com/modelcontextprotocol/sdk)
-[![Puppeteer Core](https://img.shields.io/badge/puppeteer--core-22-orange.svg)](https://pptr.dev)
 
 <br/>
 
 ![Architecture](screenshots/01-architecture.svg)
 
 </div>
+
+---
+
+## Quick Start
+
+No cloning. No building. Paste this into your Claude Desktop config and you're done:
+
+```json
+{
+  "mcpServers": {
+    "accessibility-bridge": {
+      "command": "npx",
+      "args": ["-y", "mcp-accessibility-bridge"]
+    }
+  }
+}
+```
+
+Config file location:
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+
+Then fully quit and relaunch Claude Desktop. That's it.
 
 ---
 
@@ -33,15 +57,16 @@ MCP Accessibility Bridge is a **stdio MCP server** that connects Claude Desktop 
 
 ## Table of Contents
 
+- [Quick Start](#quick-start)
 - [Architecture](#architecture)
 - [Why the Accessibility Tree?](#why-the-accessibility-tree)
 - [8 MCP Tools](#8-mcp-tools)
 - [Selector Priority Engine](#selector-priority-engine)
 - [Real-World Use Cases](#real-world-use-cases)
-- [Installation](#installation)
 - [Chrome Setup](#chrome-setup)
 - [Claude Desktop Configuration](#claude-desktop-configuration)
 - [Usage Examples](#usage-examples)
+- [Example Project](#example-project)
 - [Project Structure](#project-structure)
 - [How It Works (Deep Dive)](#how-it-works-deep-dive)
 - [Contributing](#contributing)
@@ -318,7 +343,7 @@ Output: input[type="email"][name="email"]
 Playwright: page.locator('input[type="email"][name="email"]')
 ```
 
-Every element returns all four frameworks:
+Every element returns selectors for all four frameworks:
 
 ```json
 {
@@ -393,36 +418,6 @@ Claude calls `get_element_properties` for each selector and confirms role + name
 
 ---
 
-## Installation
-
-### Prerequisites
-
-- **Node.js 18+**
-- **npm 9+**
-- **Google Chrome** (any recent version)
-- **Claude Desktop** with MCP support
-
-### Steps
-
-```bash
-# Clone the repository
-git clone https://github.com/yashpreetbathla/mcp-accessibility-bridge.git
-cd mcp-accessibility-bridge
-
-# Install dependencies (no Chromium download — uses your existing Chrome)
-npm install
-
-# Build TypeScript
-npm run build
-
-# Verify the server starts cleanly
-node dist/index.js
-# Should start silently (waiting for MCP stdio connection)
-# Press Ctrl+C to stop
-```
-
----
-
 ## Chrome Setup
 
 Chrome must be running with the remote debugging port open **before** calling `browser_connect`.
@@ -474,9 +469,9 @@ Expected response:
 
 Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows).
 
-### Option 1 — npx (recommended, no install needed)
+### Option 1 — npx (recommended)
 
-Works immediately. No path to configure, works on any machine.
+Zero install. Works on any machine. `npx` downloads the package on first run and caches it.
 
 ```json
 {
@@ -513,20 +508,10 @@ Then use just the command name — no path, no args:
 git clone https://github.com/yashpreetbathla/mcp-accessibility-bridge.git
 cd mcp-accessibility-bridge
 npm install && npm run build
-npm link          # registers the binary globally
+npm link
 ```
 
-Config becomes identical to Option 2:
-
-```json
-{
-  "mcpServers": {
-    "accessibility-bridge": {
-      "command": "mcp-accessibility-bridge"
-    }
-  }
-}
-```
+Config becomes identical to Option 2. Any local edits are reflected immediately without reinstalling.
 
 **After saving:** fully quit Claude Desktop (`Cmd+Q` on macOS), then relaunch. The `accessibility-bridge` tools will appear in Claude's tool list.
 
@@ -538,7 +523,7 @@ Config becomes identical to Option 2:
 
 > *"Connect to Chrome and navigate to https://github.com"*
 
-Claude will call `browser_connect` then `browser_navigate` and confirm the page title.
+Claude calls `browser_connect` then `browser_navigate` and confirms the page title and HTTP status.
 
 ### Get the Accessibility Tree
 
@@ -555,8 +540,8 @@ Claude will call `browser_connect` then `browser_navigate` and confirm the page 
     "role": "WebArea",
     "name": "GitHub",
     "children": [
-      { "role": "banner", "name": "", "children": [...] },
-      { "role": "main", "name": "", "children": [...] }
+      { "role": "banner", "name": "", "children": ["..."] },
+      { "role": "main",   "name": "", "children": ["..."] }
     ]
   }
 }
@@ -574,10 +559,11 @@ Claude will call `browser_connect` then `browser_navigate` and confirm the page 
       "role": "button",
       "name": "Sign in",
       "suggestedSelectors": {
-        "playwright": "page.getByRole('button', { name: 'Sign in' })",
-        "selenium": "driver.find_element(By.XPATH, \"//button[@aria-label='Sign in']\")",
-        "cypress": "cy.get('[data-testid=\"sign-in-btn\"]')",
-        "stability": "high",
+        "playwright":  "page.getByRole('button', { name: 'Sign in' })",
+        "selenium":    "driver.find_element(By.XPATH, \"//button[@aria-label='Sign in']\")",
+        "cypress":     "cy.get('[data-testid=\"sign-in-btn\"]')",
+        "webdriverio": "$('[data-testid=\"sign-in-btn\"]')",
+        "stability":   "high",
         "recommended": "page.getByRole('button', { name: 'Sign in' })"
       }
     }
@@ -599,35 +585,57 @@ Claude calls `get_focused_element` and returns the role, name, and selectors of 
 
 ---
 
+## Example Project
+
+The [`examples/playwright-github-tests/`](examples/playwright-github-tests/) directory contains a complete Playwright test suite for GitHub built entirely using selectors generated by Claude + this MCP server. Zero time was spent in Chrome DevTools.
+
+```
+examples/playwright-github-tests/
+├── selectors/
+│   └── github.selectors.ts        ← selector library generated by Claude
+└── tests/
+    ├── github-home.spec.ts         ← home page landmark + CTA tests
+    ├── github-login.spec.ts        ← login form: happy path, tab order, error alerts
+    ├── github-search.spec.ts       ← search flow + keyboard shortcut discovery
+    └── accessibility-audit.spec.ts ← WCAG 2.1 AA: headings, labels, focus trapping
+```
+
+Every selector has a comment showing which Claude prompt and which MCP tool produced it. See the [example README](examples/playwright-github-tests/README.md) for the full walkthrough.
+
+---
+
 ## Project Structure
 
 ```
 mcp-accessibility-bridge/
-├── package.json                   # ESM module, npm scripts
+├── package.json                   # ESM module, bin entry, npm metadata
 ├── tsconfig.json                  # ES2022, NodeNext modules
-├── README.md                      # This file
-├── POLICY.md                      # Usage policy and responsible use
-└── src/
-    ├── index.ts                   # McpServer setup, tool registration, stdio transport
-    │
-    ├── browser/
-    │   ├── BrowserManager.ts      # Singleton: manages Browser + Page + CDPSession lifecycle
-    │   └── types.ts               # CDP response interfaces (CdpAXNode, DomDescribeNode, etc.)
-    │
-    ├── tools/
-    │   ├── browserConnect.ts      # browser_connect — puppeteer.connect() + Accessibility.enable
-    │   ├── browserNavigate.ts     # browser_navigate — page.goto()
-    │   ├── browserDisconnect.ts   # browser_disconnect — browser.disconnect()
-    │   ├── getAccessibilityTree.ts    # get_accessibility_tree — snapshot or getFullAXTree
-    │   ├── queryAccessibilityTree.ts  # query_accessibility_tree — Accessibility.queryAXTree
-    │   ├── getElementProperties.ts    # get_element_properties — CSS → backendNodeId → AX
-    │   ├── getInteractiveElements.ts  # get_interactive_elements — full tree filtered + parallel DOM
-    │   └── getFocusedElement.ts       # get_focused_element — activeElement + partial AX tree
-    │
-    └── utils/
-        ├── axTree.ts              # pruneToDepth, assembleTree, buildTreeIndex, cdpAXNodeToSummary
-        ├── selectorGenerator.ts   # 4-priority selector engine → multi-framework output
-        └── errors.ts              # toolSuccess(), toolError(), BrowserNotConnectedError
+├── bin/
+│   └── mcp-accessibility-bridge.js  # CLI entry point (shebang wrapper)
+├── src/
+│   ├── index.ts                   # McpServer setup, tool registration, stdio transport
+│   ├── browser/
+│   │   ├── BrowserManager.ts      # Singleton: Browser + Page + CDPSession lifecycle
+│   │   └── types.ts               # CDP response interfaces (CdpAXNode, etc.)
+│   ├── tools/
+│   │   ├── browserConnect.ts      # browser_connect
+│   │   ├── browserNavigate.ts     # browser_navigate
+│   │   ├── browserDisconnect.ts   # browser_disconnect
+│   │   ├── getAccessibilityTree.ts    # get_accessibility_tree
+│   │   ├── queryAccessibilityTree.ts  # query_accessibility_tree
+│   │   ├── getElementProperties.ts    # get_element_properties
+│   │   ├── getInteractiveElements.ts  # get_interactive_elements
+│   │   └── getFocusedElement.ts       # get_focused_element
+│   └── utils/
+│       ├── axTree.ts              # Tree assembly, traversal, pruning
+│       ├── selectorGenerator.ts   # 4-priority selector engine
+│       └── errors.ts              # toolSuccess(), toolError(), BrowserNotConnectedError
+├── examples/
+│   └── playwright-github-tests/   # Full Playwright suite generated with this tool
+├── screenshots/                   # Architecture + workflow diagrams
+├── README.md
+├── POLICY.md                      # Responsible use guidelines
+└── LICENSE
 ```
 
 ### Key Design Decisions
@@ -695,14 +703,19 @@ This prevents Claude from recommending `#mat-input-3` (Angular Material auto-ID)
 Contributions are welcome. Please read [POLICY.md](POLICY.md) before contributing.
 
 ```bash
+# Clone and set up
+git clone https://github.com/yashpreetbathla/mcp-accessibility-bridge.git
+cd mcp-accessibility-bridge
+npm install
+
 # Development mode (watch + recompile on save)
 npm run dev
 
 # One-off build
 npm run build
 
-# Start the server manually
-npm start
+# Link globally for local testing
+npm link
 ```
 
 **Areas to contribute:**
@@ -721,6 +734,10 @@ MIT — see [LICENSE](LICENSE).
 ---
 
 <div align="center">
+
+**[npm](https://www.npmjs.com/package/mcp-accessibility-bridge) · [GitHub](https://github.com/yashpreetbathla/mcp-accessibility-bridge) · [Issues](https://github.com/yashpreetbathla/mcp-accessibility-bridge/issues)**
+
+<br/>
 
 Built to make test automation accessible to everyone — not just those fluent in CSS selectors and XPath.
 
