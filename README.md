@@ -729,7 +729,7 @@ MIT — see [LICENSE](LICENSE).
 
 <div align="center">
 
-**[npm](https://www.npmjs.com/package/mcp-accessibility-bridge) · [GitHub](https://github.com/yashpreetbathla/mcp-accessibility-bridge) · [Issues](https://github.com/yashpreetbathla/mcp-accessibility-bridge/issues)**
+**[npm](https://www.npmjs.com/package/mcp-accessibility-bridge) · [GitHub](https://github.com/yashpreetbathla/mcp-accessibility-bridge) · [Issues](https://github.com/yashpreetbathla/mcp-accessibility-bridge/issues) · [Author](https://yashpreetbathla.github.io/notion-flow-portfolio/)**
 
 <br/>
 
